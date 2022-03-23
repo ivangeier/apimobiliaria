@@ -38,7 +38,7 @@ export default class BrokerController {
     }
 
     //verifica se usuário ja esta cadastrado no banco de dados
-    const isNewBroker = await Broker.findOne({ where: { cpf: cpf } });
+    const isNewBroker = await Broker.findOne({ where: { cpf } });
 
     if (isNewBroker) {
       res
@@ -58,14 +58,14 @@ export default class BrokerController {
     }
 
     const broker = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      cpf: cpf,
-      creci: creci,
-      creciState: creciState,
-      creciExp: creciExp,
+      firstName,
+      lastName,
+      email,
+      phone,
+      cpf,
+      creci,
+      creciState,
+      creciExp,
     };
 
     try {
@@ -79,21 +79,21 @@ export default class BrokerController {
   }
 
   static async findOneBroker(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
 
-    const broker = await Broker.findOne({ where: { id: id } });
+    const broker = await Broker.findOne({ where: { id } });
 
     if (broker) {
-      res.status(200).json({ status: 200, broker: broker });
+      res.status(200).json({ status: 200, broker });
     } else {
       res
         .status(400)
-        .json({ status: 400, message: 'Boker/corretor não enconntrado!' });
+        .json({ status: 400, message: 'Broker/corretor não encontrado!' });
     }
   }
 
   static async editBroker(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
     const {
       firstName,
       lastName,
@@ -122,15 +122,13 @@ export default class BrokerController {
       return;
     }
 
-    const isNewBroker = await Broker.findOne({ where: { cpf: cpf } });
+    const isNewBroker = await Broker.findOne({ where: { cpf } });
 
     if (isNewBroker) {
-      res
-        .status(409)
-        .json({
-          status: 409,
-          message: 'Broker/corretor já cadastrado! Utilize outro CPF',
-        });
+      res.status(409).json({
+        status: 409,
+        message: 'Broker/corretor já cadastrado! Utilize outro CPF',
+      });
       return;
     }
 
@@ -156,7 +154,7 @@ export default class BrokerController {
     };
 
     try {
-      await Broker.update(broker, { where: { id: id } });
+      await Broker.update(broker, { where: { id } });
       res.status(201).json({
         status: 201,
         message: 'Broker/corretor alterado com sucesso!',
@@ -167,9 +165,9 @@ export default class BrokerController {
   }
 
   static async deleteBroker(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
 
-    const broker = await Broker.findOne({ where: { id: id } });
+    const broker = await Broker.findOne({ where: { id } });
 
     if (!broker) {
       res
@@ -179,7 +177,7 @@ export default class BrokerController {
     }
 
     try {
-      await Broker.destroy({ where: { id: id } });
+      await Broker.destroy({ where: { id } });
       res.status(200).json({
         status: 200,
         message: 'Broker/corretor excluído com sucesso!',
