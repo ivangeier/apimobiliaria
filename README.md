@@ -44,6 +44,10 @@ A aplicação ficará disponível no http://localhost:3000
 
 Acompanhe a documentação da API para acessar as rotas
 
+Versão Online
+
+- [Heroku](https://t10-apimobiliaria-ivan.herokuapp.com/broker/all)
+
 **O banco de dados iniciará sem nenhuma informação, sugerimos iniciar com a rota para criar um novo corretor /broker/create**
 
 ## Documentação da API
